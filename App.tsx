@@ -11,11 +11,11 @@ const App = () => {
     <NavigationContainer>
       <Stack.Navigator>
         <Stack.Screen
-          name="Login"
+          name="login"
           component={login}
         />
         <Stack.Screen 
-          name="Home" 
+          name="home" 
           component={home} 
         />
       </Stack.Navigator>
