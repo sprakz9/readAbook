@@ -1,7 +1,7 @@
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native'
 import React from 'react'
 
-const login = () => {
+const Login = () => {
   return (
     <TouchableOpacity style = {styles.btn_login}>
         <Text style = {styles.text_login}>Login</Text>
@@ -20,5 +20,5 @@ const styles = StyleSheet.create({
     }
 })
 
-export default login
+export default Login
 
