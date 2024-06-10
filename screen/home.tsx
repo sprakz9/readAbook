@@ -4,7 +4,8 @@ import React from 'react'
 const home = () => {
   return (
     <View>
-      <Text>home</Text>
+      <Text>TEST BUTTON login</Text>
+      <Text>Welcome home page</Text>
     </View>
   )
 }
