@@ -3,7 +3,7 @@ import React from 'react'
 import Home from './Home'
 
 interface LoginProps {
-    navigation: any; // ประกาศ navigation เป็น any โดยตรง
+    navigation: any;
   }
   
   const Login = ({ navigation }: LoginProps) => {

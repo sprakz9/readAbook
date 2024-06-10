@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "115882026764",
+    "project_id": "readabook-8c53f",
+    "storage_bucket": "readabook-8c53f.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:115882026764:android:e034895c8d41e2f7100b29",
+        "android_client_info": {
+          "package_name": "com.readabook"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBt2B6n8ErcILv2NBt-guCiUQmQZv3IieU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -4,10 +4,15 @@ import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import login from './screen/Login';
 import home from './screen/Home';
 
+
+
 const Stack = createNativeStackNavigator();
 
 const App = () => {
   return (
+
+    
+
     <NavigationContainer>
       <Stack.Navigator>
         <Stack.Screen
