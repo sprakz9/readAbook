@@ -1,11 +1,20 @@
-import { View, Text, StyleSheet, TouchableOpacity } from 'react-native'
+import { View, Text, StyleSheet, TouchableOpacity , Button} from 'react-native'
 import React from 'react'
+import Home from './Home'
 
-const Login = () => {
+interface LoginProps {
+    navigation: any; // ประกาศ navigation เป็น any โดยตรง
+  }
+  
+  const Login = ({ navigation }: LoginProps) => {
+    const handleLoginPress = () => {
+      navigation.navigate('home');
+    };
+      
   return (
-    <TouchableOpacity style = {styles.btn_login}>
-        <Text style = {styles.text_login}>Login</Text>
-    </TouchableOpacity>
+        <TouchableOpacity style = {styles.btn_login} onPress={handleLoginPress}>
+            <Text style = {styles.text_login}>Login</Text>
+        </TouchableOpacity>
   )
 }
 
@@ -21,4 +30,6 @@ const styles = StyleSheet.create({
 })
 
 export default Login
+
+
 
