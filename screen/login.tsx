@@ -15,6 +15,8 @@ interface LoginProps {
         <TouchableOpacity style = {styles.btn_login} onPress={handleLoginPress}>
             <Text style = {styles.text_login}>Login</Text>
         </TouchableOpacity>
+
+        
   )
 }
 
