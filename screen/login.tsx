@@ -87,7 +87,6 @@ Icon.loadFont();
       </View>
     </SafeAreaView>
 
-        
     </>
   )
 }
