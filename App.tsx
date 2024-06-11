@@ -20,7 +20,7 @@ const App = () => {
           component={login}
         />
         <Stack.Screen 
-          name="home" 
+          name="Home" 
           component={home} 
         />
       </Stack.Navigator>
