@@ -8,21 +8,25 @@ import {
   TextInput,
   Image,
 } from 'react-native'
-import Icon from 'react-native-vector-icons/FontAwesome';
 import React from 'react'
-import Home from './Home'
+import { useNavigation } from '@react-navigation/native';
 
-Icon.loadFont();
+
   const Login = () => {
     
+    const navigation = useNavigation();
     const [textUserName, setUserName] = React.useState('');
     const [textPassword, setPassword] = React.useState('');
+
+    const handleLogin = () => {
+      navigation.navigate("Home");
+    }
 
       
   return (
     <>
       <SafeAreaView style = {styles.container}>
-        <Text style = {styles.login_header}>ล็อคอินเข้าระบบ</Text>
+        <Text style = {styles.login_header}>ล็อกอินเข้าระบบ</Text>
           <View style={styles.line}></View>
 
           <View>
@@ -30,10 +34,10 @@ Icon.loadFont();
               fontSize : 15,
               textAlign : "center",
               fontWeight : "bold",
+              margin : 4
             }}>เข้าส่ระบบด้วย ? </Text>
 
               {/* login with facebook */}
-
             <TouchableOpacity style = {styles.btn_facebook}> 
             <Image
               source={{uri : "https://web-asset.mebmarket.com/web/dist/assets/images/ic-facebook-white-bg.png"}}
@@ -54,6 +58,12 @@ Icon.loadFont();
                 เข้าสู่ระบบด้วย Google
               </Text>
             </TouchableOpacity>
+              <Text style = {{
+                fontSize : 15,
+                textAlign : "center",
+                fontWeight : "bold",
+                margin : 8
+              }}>หรือเข้าสู่ระบบด้วย readAbook Account </Text>
           </View>
       
 
@@ -69,7 +79,8 @@ Icon.loadFont();
         value={textPassword}
         placeholder="Password"
       />
-      <TouchableOpacity style = {styles.btn_login}>
+
+      <TouchableOpacity style = {styles.btn_login} onPress={handleLogin} >
         <Text style = {styles.text_login}>เข้าสู่ระบบ</Text>
       </TouchableOpacity>
 
@@ -97,13 +108,15 @@ const styles = StyleSheet.create({
         borderRadius : 10,
         marginHorizontal : 60,
         height : 30,
-        justifyContent : "center"
+        justifyContent : "center",
+        marginTop : 6
     },
     btn_register : {
         backgroundColor : "white",
         borderRadius : 10,
         marginHorizontal : 100,
-        marginTop : 8
+        marginTop : 8,
+        borderWidth: 1,
     },
     text_login : {
         color : "white" , 
@@ -120,15 +133,17 @@ const styles = StyleSheet.create({
         margin: 12,
         borderWidth: 1,
         padding: 10,
-        borderRadius : 10
+        borderRadius : 10,
+        marginHorizontal : 30
     },
     container: {
-        // flex: 1,
-        justifyContent: 'center',
+        flex: 1,
+        // justifyContent: 'center',
         paddingHorizontal: 10,
+        backgroundColor : "white"
     },
     login_header : {
-        marginTop : 10,
+        marginTop : 26,
         textAlign : "center",
         fontSize : 20,
         color : "black",
@@ -170,6 +185,7 @@ const styles = StyleSheet.create({
         justifyContent : "center",
         flexDirection : "row",
         alignItems: "center",
+        borderWidth: 1,
     },
     text_google : {
         color : "black",
