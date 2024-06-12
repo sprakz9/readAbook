@@ -20,10 +20,15 @@ import { useNavigation } from '@react-navigation/native';
     const [textPassword, setPassword] = React.useState('');
 
     const handleLogin = () => {
+      setUserName("");
+      setPassword("");
+      
       if(textUserName.trim() == "username" && textPassword.trim()) {
         navigation.navigate("Home"); 
-      }else{
-        Alert.alert("test func !")
+      } else if (textUserName.trim() != "username" || textPassword.trim() !="password") {
+        Alert.alert("ชื่อผู้ใช้หรือรหัสผ่านไม่ถูกต้อง")
+      } else {
+        Alert.alert("ใส่ id กับ pass ด้วยจ้า")
       }
     }
 
