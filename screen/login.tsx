@@ -7,6 +7,7 @@ import {
   SafeAreaView , 
   TextInput,
   Image,
+  Alert,
 } from 'react-native'
 import React from 'react'
 import { useNavigation } from '@react-navigation/native';
@@ -19,7 +20,11 @@ import { useNavigation } from '@react-navigation/native';
     const [textPassword, setPassword] = React.useState('');
 
     const handleLogin = () => {
-      navigation.navigate("Home");
+      if(textUserName.trim() == "username" && textPassword.trim()) {
+        navigation.navigate("Home"); 
+      }else{
+        Alert.alert("test func !")
+      }
     }
 
       
