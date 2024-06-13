@@ -11,6 +11,7 @@ import {
 } from 'react-native'
 import React from 'react'
 import { useNavigation } from '@react-navigation/native';
+import { firebase } from '@react-native-firebase/auth';
 
 
   const Login = () => {
@@ -19,18 +20,28 @@ import { useNavigation } from '@react-navigation/native';
     const [textUserName, setUserName] = React.useState('');
     const [textPassword, setPassword] = React.useState('');
 
-    const handleLogin = () => {
-      setUserName("");
-      setPassword("");
+    // const handleLogin = () => {
+    //   setUserName("");
+    //   setPassword("");
       
-      if(textUserName.trim() == "username" && textPassword.trim()) {
-        navigation.navigate("Home"); 
-      } else if (textUserName.trim() != "username" || textPassword.trim() !="password") {
-        Alert.alert("ชื่อผู้ใช้หรือรหัสผ่านไม่ถูกต้อง")
-      } else {
-        Alert.alert("ใส่ id กับ pass ด้วยจ้า")
-      }
+    //   if(textUserName.trim() == "123" && textPassword.trim() == "123") {
+    //     navigation.navigate("Home"); 
+    //   } else {
+    //     Alert.alert("ไอดีหรือพาสไม่ถูกต้อง")
+    //   } 
+    // }
+    const [error, setError] = React.useState('');
+
+    const handleLogin = async () => {
+    try {
+      await firebase.auth().signInWithEmailAndPassword(textUserName.trim(), textPassword.trim());
+      setUserName('');
+      setPassword('');
+      navigation.navigate("Home");
+    } catch (error : any) {
+      setError(error.message);
     }
+  }
 
       
   return (
