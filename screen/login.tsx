@@ -8,10 +8,14 @@ import {
   TextInput,
   Image,
   Alert,
+  ActivityIndicator,
+  Modal
 } from 'react-native'
-import React from 'react'
+import React, { useState } from 'react';
 import { useNavigation } from '@react-navigation/native';
 import { firebase } from '@react-native-firebase/auth';
+import auth from '@react-native-firebase/auth';
+import LoadingDia from '../loadingDialog/LoadingDia';
 
 
   const Login = () => {
@@ -19,6 +23,7 @@ import { firebase } from '@react-native-firebase/auth';
     const navigation: any = useNavigation();
     const [textUserName, setUserName] = React.useState('');
     const [textPassword, setPassword] = React.useState('');
+    const [loading, setLoading] = useState(false); //สำหรับ Loading ระหว่าง Login (false คือ สถานะการโหลด)
 
     // const handleLogin = () => {
     //   setUserName("");
@@ -30,16 +35,25 @@ import { firebase } from '@react-native-firebase/auth';
     //     Alert.alert("ไอดีหรือพาสไม่ถูกต้อง")
     //   } 
     // }
-    const [error, setError] = React.useState('');
 
     const handleLogin = async () => {
-    try {
-      await firebase.auth().signInWithEmailAndPassword(textUserName.trim(), textPassword.trim());
+      setLoading(true); // เริ่มโหลด
       setUserName('');
       setPassword('');
+    try {
+      if (!textUserName || !textPassword) {
+        throw new Error("กรุณากรอกข้อมูลให้ครบ");
+      }
+      await firebase.auth().signInWithEmailAndPassword(textUserName.trim(), textPassword.trim());
       navigation.navigate("Home");
     } catch (error : any) {
-      setError(error.message);
+        if (error.message === "กรุณากรอกข้อมูลให้ครบ") {
+          Alert.alert(error.message);
+        } else {
+          Alert.alert("ไอดีหรือพาสไม่ถูกต้อง");
+        }
+    } finally {
+      setLoading(false); // จบโหลด
     }
   }
 
@@ -49,7 +63,6 @@ import { firebase } from '@react-native-firebase/auth';
       <SafeAreaView style = {styles.container}>
         <Text style = {styles.login_header}>ล็อกอินเข้าระบบ</Text>
           <View style={styles.line}></View>
-
           <View>
             <Text style = {{
               fontSize : 15,
@@ -101,7 +114,7 @@ import { firebase } from '@react-native-firebase/auth';
         placeholder="Password"
       />
 
-      <TouchableOpacity style = {styles.btn_login} onPress={handleLogin} >
+      <TouchableOpacity style = {styles.btn_login} onPress={handleLogin}>
         <Text style = {styles.text_login}>เข้าสู่ระบบ</Text>
       </TouchableOpacity>
 
@@ -117,8 +130,11 @@ import { firebase } from '@react-native-firebase/auth';
         <Text style = {styles.text_register}>สมัครสมาชิก</Text>
         </TouchableOpacity>
       </View>
-    </SafeAreaView>
 
+      {/* ใช้ Component LoadingDia ที่สร้างไว้ */}
+      <LoadingDia loading={loading} />
+    </SafeAreaView>
+      
     </>
   )
 }
@@ -220,9 +236,7 @@ const styles = StyleSheet.create({
         resizeMode: 'contain', 
         alignSelf: 'center',
         marginRight: 26,
-  }
-
-    
+  },
   
 
 })
