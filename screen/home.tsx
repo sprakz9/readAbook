@@ -44,10 +44,15 @@ const Home = () => {
         renderItem={({ item }) => (
         <View style={styles.productContainer}>
           <Image source={{ uri: item.thumbnail }} style={styles.thumbnail} />
+
           <Text style={styles.title}>{item.title}</Text>
-          <Text style={styles.price}>Price: ${item.price}</Text>
+
+            <View style = {styles.box_price}>
+              <Text style={styles.price}>฿ {item.price}</Text>
+            </View>
         </View>
       )}
+      numColumns={3}
     />
       </View>
   )
@@ -59,31 +64,46 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     padding: 20,
   },
-  userContainer: {
-    marginBottom: 20,
-    padding: 10,
-    borderRadius: 5,
-    backgroundColor: '#f5f5f5',
-  },
   thumbnail: {
-    width: 100,
+    width: 110,
     height: 150,
     resizeMode: 'contain',
-    marginVertical: 20,
+    marginLeft : 3
   },
   productContainer: {
     flex: 1,
     alignItems: 'center',
     marginBottom: 20,
+    borderRadius : 5,
+    borderWidth : 0.5,
+    margin : 1,
+    position: 'relative',
+    overflow : "hidden",
   },
   title: {
     fontSize: 18,
     fontWeight: 'bold',
-    marginVertical: 10,
+    color : "black",
+    alignSelf: 'flex-start',
+    
   },
   price: {
-    fontSize: 16,
-    color: 'green',
+    fontSize: 14,
+    color: 'white',
+    fontWeight : "bold",
+  },
+  box_price : {
+    width : 50,
+    height : 23,
+    backgroundColor : "#00bf6c",
+    borderRadius : 3,
+    marginRight : 4,
+    marginBottom : 3,
+    alignSelf : "flex-end",
+    justifyContent: 'center',
+    alignItems: 'center',
+    bottom: 0,
+    right: 0,
   },
 });
 
