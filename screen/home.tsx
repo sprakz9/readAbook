@@ -6,6 +6,7 @@ interface Product {
   thumbnail: string;
   price: number;
   title: string;
+  authors : string;
 }
 
 const Home = () => {
@@ -17,8 +18,8 @@ const Home = () => {
       try {
         const querySnapshot = await firestore().collection('product_book').get();
         const productsData = querySnapshot.docs.map(doc => {
-          const { thumbnail, price, title } = doc.data();
-          return { thumbnail, price, title };
+          const { thumbnail, price, title , authors} = doc.data();
+          return { thumbnail, price, title , authors };
         });
         setProduct(productsData);
       } catch (error) {
@@ -37,24 +38,42 @@ const Home = () => {
 
   
   return (
+    <>
+      <View style = {styles.topHeader_View}>
+          <Text style = {styles.topHeader_Text}>readAbook</Text>
+      </View>
+
+      <View>
+          <Text style = {styles.headerText}>หนังสือทั้งหมด</Text>
+      </View>
+
       <View style={styles.container}>
         <FlatList
         data={product_book}
         keyExtractor={(item, index) => index.toString()}
         renderItem={({ item }) => (
         <View style={styles.productContainer}>
-          <Image source={{ uri: item.thumbnail }} style={styles.thumbnail} />
+          
+          <View style = {styles.thumbnailContainer}>
+            <Image source={{ uri: item.thumbnail }} style={styles.thumbnail}/>
+          </View>
 
-          <Text style={styles.title}>{item.title}</Text>
+            <Text style={styles.title} numberOfLines={2} ellipsizeMode='tail'>
+              {item.title}
+            </Text> 
+
+            <Text style = {styles.author}>{item.authors}</Text>
 
             <View style = {styles.box_price}>
-              <Text style={styles.price}>฿ {item.price}</Text>
+              <Text style={styles.price}>฿ {item.price}
+              </Text>
             </View>
         </View>
       )}
       numColumns={3}
     />
       </View>
+  </>
   )
 }
 
@@ -68,24 +87,28 @@ const styles = StyleSheet.create({
     width: 110,
     height: 150,
     resizeMode: 'contain',
-    marginLeft : 3
+    marginLeft : 3 , 
+  },
+  thumbnailContainer : {
+    alignItems: 'center',
   },
   productContainer: {
     flex: 1,
-    alignItems: 'center',
+    // alignItems: 'center',
     marginBottom: 20,
     borderRadius : 5,
     borderWidth : 0.5,
     margin : 1,
     position: 'relative',
     overflow : "hidden",
+    height: 250, 
   },
   title: {
     fontSize: 18,
     fontWeight: 'bold',
     color : "black",
-    alignSelf: 'flex-start',
-    
+    textAlign : "left",
+    paddingHorizontal: 3,
   },
   price: {
     fontSize: 14,
@@ -95,6 +118,8 @@ const styles = StyleSheet.create({
   box_price : {
     width : 50,
     height : 23,
+    bottom: 0,
+    right: 0,
     backgroundColor : "#00bf6c",
     borderRadius : 3,
     marginRight : 4,
@@ -102,9 +127,28 @@ const styles = StyleSheet.create({
     alignSelf : "flex-end",
     justifyContent: 'center',
     alignItems: 'center',
-    bottom: 0,
-    right: 0,
+    position: 'absolute',
   },
+  author : {
+    textAlign : "left",
+    paddingHorizontal : 3,
+  },
+  headerText : {
+    textAlign : "center",
+    fontSize : 26,
+    color : "black"
+  },
+  topHeader_Text : {
+    fontSize : 25,
+    fontWeight : "bold",
+    backgroundColor : "#00bf6c",
+    textAlign : "center",
+    color : "white",
+    height : 45,
+  },
+  topHeader_View : {
+    justifyContent: 'center',
+  }
 });
 
 export default Home
