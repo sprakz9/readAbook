@@ -1,6 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, StyleSheet, FlatList , Image } from 'react-native';
+import { View, Text, StyleSheet, FlatList , Image , Dimensions } from 'react-native';
 import firestore, { doc } from '@react-native-firebase/firestore';
+import Carousel from 'react-native-snap-carousel';
+
+
+const { width: screenWidth } = Dimensions.get('window');
 
 interface Product {
   thumbnail: string;
@@ -70,7 +74,7 @@ const Home = () => {
             </View>
         </View>
       )}
-      numColumns={3}
+      // numColumns={3}
     />
       </View>
   </>
@@ -84,10 +88,11 @@ const styles = StyleSheet.create({
     padding: 20,
   },
   thumbnail: {
-    width: 110,
+    width: 120,
     height: 150,
     resizeMode: 'contain',
     marginLeft : 3 , 
+    marginTop : 3
   },
   thumbnailContainer : {
     alignItems: 'center',
@@ -96,7 +101,7 @@ const styles = StyleSheet.create({
     flex: 1,
     // alignItems: 'center',
     marginBottom: 20,
-    borderRadius : 5,
+    borderRadius : 2,
     borderWidth : 0.5,
     margin : 1,
     position: 'relative',
@@ -136,18 +141,22 @@ const styles = StyleSheet.create({
   headerText : {
     textAlign : "center",
     fontSize : 26,
-    color : "black"
+    color : "black",
+    marginTop : 3
   },
   topHeader_Text : {
     fontSize : 25,
     fontWeight : "bold",
-    backgroundColor : "#00bf6c",
     textAlign : "center",
     color : "white",
     height : 45,
+    lineHeight: 45,
   },
   topHeader_View : {
     justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#00bf6c',
+    height: 45
   }
 });
 
