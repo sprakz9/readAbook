@@ -2,38 +2,27 @@ import React, { useState, useEffect } from 'react';
 import { View, Text, StyleSheet, FlatList , Image , Dimensions } from 'react-native';
 import firestore, { doc } from '@react-native-firebase/firestore';
 import Carousel, { Pagination } from 'react-native-snap-carousel';
-import PropTypes from 'prop-types';
 
-
-
-const { width: screenWidth } = Dimensions.get('window');
 
 interface Product {
   thumbnail: string;
   price: number;
   title: string;
   authors : string;
+  description : string
 }
 
 
 const Home = () => {
-  const [product_book, setProduct] = useState<Product[]>([]);
+  const [product_book, setProduct] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);  
-  const [activeSlide, setActiveSlide] = useState(0);
 
-   
   useEffect(() => {
     const fetchData = async() => {
       try {
         const querySnapshot = await firestore().collection('product_book').get();
-        const productsData = querySnapshot.docs.map(doc => {
-          const { thumbnail, price, title , authors} = doc.data();
-          return { thumbnail, price, title , authors };
-        });
+        const productsData = querySnapshot.docs.map(doc => doc.data());
         setProduct(productsData);
-
-        
-
       } catch (error) {
         console.error('Error fetching products: ', error);
       } finally {
@@ -47,9 +36,7 @@ const Home = () => {
   if (loading) {
     return <Text>Loading...</Text>;
   }
-
-
-      
+  
   return (
     <>
       <View style = {styles.topHeader_View}>
@@ -61,9 +48,10 @@ const Home = () => {
       </View>
 
       <View style={styles.container}>
-        {/* <FlatList
+        <FlatList
         data={product_book}
         keyExtractor={(item, index) => index.toString()}
+        horizontal
         renderItem={({ item }) => (
           <View style={styles.productContainer}>
             
@@ -81,41 +69,8 @@ const Home = () => {
               </View>
           </View>
           )}
-        /> */}
-        
-        <Carousel
-          data={product_book}
-          renderItem={({ item }) => (
-            <View style={styles.productContainer}>
-              <View style={styles.thumbnailContainer}>
-                <Image source={{ uri: item.thumbnail }} style={styles.thumbnail} />
-              </View>
-              <Text style={styles.title} numberOfLines={2} ellipsizeMode="tail">
-                {item.title}
-              </Text>
-              <Text style={styles.author}>{item.authors}</Text>
-              <View style={styles.box_price}>
-                <Text style={styles.price}>฿ {item.price}</Text>
-              </View>
-            </View>
-          )}
-          sliderWidth={screenWidth}
-          itemWidth={screenWidth - 60}
-          onSnapToItem={(index) => setActiveSlide(index)}
-        />
-         <Pagination
-          dotsLength={product_book.length}
-          activeDotIndex={activeSlide}
-          containerStyle={{ paddingVertical: 10 }}
-          dotStyle={{
-            width: 10,
-            height: 10,
-            borderRadius: 5,
-            backgroundColor: '#00bf6c',
-          }}
-          inactiveDotOpacity={0.4}
-          inactiveDotScale={0.6}
-        />
+          showsHorizontalScrollIndicator={false}
+        /> 
     </View>
 
     
@@ -150,13 +105,16 @@ const styles = StyleSheet.create({
     position: 'relative',
     overflow : "hidden",
     height: 250, 
+    width : 160,
+    marginHorizontal: 5,
   },
   title: {
     fontSize: 18,
     fontWeight: 'bold',
     color : "black",
     textAlign : "left",
-    paddingHorizontal: 3,
+    paddingHorizontal: 5,
+    marginTop : 2
   },
   price: {
     fontSize: 14,
@@ -179,7 +137,7 @@ const styles = StyleSheet.create({
   },
   author : {
     textAlign : "left",
-    paddingHorizontal : 3,
+    paddingHorizontal : 5,
   },
   headerText : {
     textAlign : "center",
@@ -219,8 +177,6 @@ const styles = StyleSheet.create({
   },
 });
 
-Home.propTypes = {
-  product_book: PropTypes.array.isRequired,
-};
+
 
 export default Home
