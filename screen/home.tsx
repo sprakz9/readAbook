@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, StyleSheet, FlatList , Image , Dimensions } from 'react-native';
 import firestore, { doc } from '@react-native-firebase/firestore';
-import Carousel from 'react-native-snap-carousel';
+import Carousel, { Pagination } from 'react-native-snap-carousel';
+import PropTypes from 'prop-types';
+
 
 
 const { width: screenWidth } = Dimensions.get('window');
@@ -13,9 +15,12 @@ interface Product {
   authors : string;
 }
 
+
 const Home = () => {
   const [product_book, setProduct] = useState<Product[]>([]);
   const [loading, setLoading] = useState(true);  
+  const [activeSlide, setActiveSlide] = useState(0);
+
    
   useEffect(() => {
     const fetchData = async() => {
@@ -26,6 +31,9 @@ const Home = () => {
           return { thumbnail, price, title , authors };
         });
         setProduct(productsData);
+
+        
+
       } catch (error) {
         console.error('Error fetching products: ', error);
       } finally {
@@ -40,7 +48,8 @@ const Home = () => {
     return <Text>Loading...</Text>;
   }
 
-  
+
+      
   return (
     <>
       <View style = {styles.topHeader_View}>
@@ -52,34 +61,68 @@ const Home = () => {
       </View>
 
       <View style={styles.container}>
-        <FlatList
+        {/* <FlatList
         data={product_book}
         keyExtractor={(item, index) => index.toString()}
         renderItem={({ item }) => (
-        <View style={styles.productContainer}>
-          
-          <View style = {styles.thumbnailContainer}>
-            <Image source={{ uri: item.thumbnail }} style={styles.thumbnail}/>
-          </View>
-
-            <Text style={styles.title} numberOfLines={2} ellipsizeMode='tail'>
-              {item.title}
-            </Text> 
-
-            <Text style = {styles.author}>{item.authors}</Text>
-
-            <View style = {styles.box_price}>
-              <Text style={styles.price}>฿ {item.price}
-              </Text>
+          <View style={styles.productContainer}>
+            
+            <View style = {styles.thumbnailContainer}>
+              <Image source={{ uri: item.thumbnail }} style={styles.thumbnail}/>
             </View>
-        </View>
-      )}
-      // numColumns={3}
-    />
-      </View>
+
+              <Text style={styles.title} numberOfLines={2} ellipsizeMode='tail'>
+                {item.title}
+              </Text> 
+              <Text style = {styles.author}>{item.authors}</Text>
+              <View style = {styles.box_price}>
+                <Text style={styles.price}>฿ {item.price}
+                </Text>
+              </View>
+          </View>
+          )}
+        /> */}
+        
+        <Carousel
+          data={product_book}
+          renderItem={({ item }) => (
+            <View style={styles.productContainer}>
+              <View style={styles.thumbnailContainer}>
+                <Image source={{ uri: item.thumbnail }} style={styles.thumbnail} />
+              </View>
+              <Text style={styles.title} numberOfLines={2} ellipsizeMode="tail">
+                {item.title}
+              </Text>
+              <Text style={styles.author}>{item.authors}</Text>
+              <View style={styles.box_price}>
+                <Text style={styles.price}>฿ {item.price}</Text>
+              </View>
+            </View>
+          )}
+          sliderWidth={screenWidth}
+          itemWidth={screenWidth - 60}
+          onSnapToItem={(index) => setActiveSlide(index)}
+        />
+         <Pagination
+          dotsLength={product_book.length}
+          activeDotIndex={activeSlide}
+          containerStyle={{ paddingVertical: 10 }}
+          dotStyle={{
+            width: 10,
+            height: 10,
+            borderRadius: 5,
+            backgroundColor: '#00bf6c',
+          }}
+          inactiveDotOpacity={0.4}
+          inactiveDotScale={0.6}
+        />
+    </View>
+
+    
   </>
   )
 }
+
 
 const styles = StyleSheet.create({
   container: {
@@ -157,7 +200,27 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: '#00bf6c',
     height: 45
-  }
+  },
+  slide: {
+    backgroundColor: 'white',
+    borderRadius: 8,
+    height: 200,
+    padding: 20,
+    marginLeft: 25,
+    marginRight: 25,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  image: {
+    width: '100%',
+    height: '100%',
+    resizeMode: 'cover',
+    borderRadius: 8,
+  },
 });
+
+Home.propTypes = {
+  product_book: PropTypes.array.isRequired,
+};
 
 export default Home
