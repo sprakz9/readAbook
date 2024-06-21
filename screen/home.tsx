@@ -1,17 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, StyleSheet, FlatList , Image , Dimensions } from 'react-native';
+import { View, Text, StyleSheet, FlatList , Image , TouchableOpacity, Alert  } from 'react-native';
 import firestore, { doc } from '@react-native-firebase/firestore';
-import Carousel, { Pagination } from 'react-native-snap-carousel';
-
-
-interface Product {
-  thumbnail: string;
-  price: number;
-  title: string;
-  authors : string;
-  description : string
-}
-
+import { useNavigation } from '@react-navigation/native';
 
 const Home = () => {
   const [product_book, setProduct] = useState<any[]>([]);
@@ -36,38 +26,40 @@ const Home = () => {
   if (loading) {
     return <Text>Loading...</Text>;
   }
-  
+
+  const handleTodetail = (bookId : string) => {
+    Alert.alert("ID หนังสือ : " + bookId.toString());
+  };
+
   return (
     <>
       <View style = {styles.topHeader_View}>
           <Text style = {styles.topHeader_Text}>readAbook</Text>
       </View>
-
       <View>
           <Text style = {styles.headerText}>หนังสือทั้งหมด</Text>
       </View>
-
       <View style={styles.container}>
         <FlatList
         data={product_book}
         keyExtractor={(item, index) => index.toString()}
         horizontal
         renderItem={({ item }) => (
-          <View style={styles.productContainer}>
-            
+            <View style={styles.productContainer}>
+              
             <View style = {styles.thumbnailContainer}>
-              <Image source={{ uri: item.thumbnail }} style={styles.thumbnail}/>
+              <TouchableOpacity onPress={() => handleTodetail(item.book_id)}>
+                <Image source={{ uri: item.thumbnail }} style={styles.thumbnail}/>
+              </TouchableOpacity>
             </View>
-
-              <Text style={styles.title} numberOfLines={2} ellipsizeMode='tail'>
-                {item.title}
-              </Text> 
-              <Text style = {styles.author}>{item.authors}</Text>
+                <Text style={styles.title} numberOfLines={2} ellipsizeMode='tail'>{item.title}</Text> 
+                <Text style = {styles.author}>{item.authors}</Text>
               <View style = {styles.box_price}>
-                <Text style={styles.price}>฿ {item.price}
-                </Text>
+                <Text style={styles.price}>฿ {item.price}</Text>
               </View>
+              
           </View>
+          
           )}
           showsHorizontalScrollIndicator={false}
         /> 
@@ -75,8 +67,10 @@ const Home = () => {
 
     
   </>
+  
   )
 }
+
 
 
 const styles = StyleSheet.create({
@@ -109,7 +103,7 @@ const styles = StyleSheet.create({
     marginHorizontal: 5,
   },
   title: {
-    fontSize: 18,
+    fontSize: 16,
     fontWeight: 'bold',
     color : "black",
     textAlign : "left",
