@@ -3,6 +3,7 @@ import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 // import Login from './screen/Login';
 import Home from './screen/Home';
+// import Book_detail from './screen/Book_detail';
 
 
 
@@ -21,6 +22,10 @@ const App = () => {
           name="Home" 
           component={Home} 
         />
+        {/* <Stack.Screen
+        name = "Book_detail"
+        component = {Book_detail}
+        /> */}
       </Stack.Navigator>
     </NavigationContainer>
   )
