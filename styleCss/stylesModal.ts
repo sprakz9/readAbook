@@ -73,8 +73,15 @@ export const stylesModal = StyleSheet.create({
     },
     dataModalContainer : {
         marginTop : 10,
+        flexDirection : "row",
+        flex : 1,
+        justifyContent : "space-between",
     },
     dataModal : {
         color : "white",
     },
+    space : {
+        margin : 30
+    }
+    
 })

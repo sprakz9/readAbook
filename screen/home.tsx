@@ -5,6 +5,7 @@ import { useNavigation } from '@react-navigation/native';
 import Modal from 'react-native-modal';
 import { styles } from '../styleCss/styles';
 import { stylesModal } from '../styleCss/stylesModal';
+import dayjs from 'dayjs';
 
 const Home = () => {
   const [product_book, setProduct] = useState<any[]>([]);
@@ -18,7 +19,10 @@ const Home = () => {
       try {
         const querySnapshot = await firestore().collection('product_book').get();
         const productsData = querySnapshot.docs.map(doc => ({ 
-          ...doc.data(), book_id: doc.id }));
+          ...doc.data(),
+           book_id: doc.id,
+           publishedDate: doc.data().publishedDate.toDate(),
+          }));
         setProduct(productsData);
       } catch (error) {
         console.error('Error fetching products: ', error);
@@ -44,6 +48,11 @@ const Home = () => {
   const onCloseModal = () => {
     setModalVisible(!isModalVisible); //เปลี่ยนให้เป็น False เพื่อปิด
   };
+
+  const formatDate = (date : any) => {
+    return dayjs(date).format('DD MMMM YYYY'); // รูปแบบวันที่ที่คุณต้องการ
+  };
+
 
   return (
     <>
@@ -109,10 +118,28 @@ const Home = () => {
                     <Text style = {stylesModal.descrtiptionModal}>{DetailBook.description}</Text>
                   </View>
 
-                  <View style = {stylesModal.dataModalContainer}>
-                    <Text style = {stylesModal.dataModal}>ซีรี่ส์ <Text>{DetailBook.title}</Text></Text>
-                    {/* <Text style = {stylesModal.dataModal}>วันที่วางขาย <Text>{DetailBook.publishedDate}</Text></Text> */}
-                  </View>
+                 <View style = {stylesModal.space}></View>
+
+                    <View style = {stylesModal.dataModalContainer}>
+                      <Text style = {stylesModal.dataModal}>ซีรี่ส์</Text>
+                      <Text style = {stylesModal.dataModal}>{DetailBook.title}</Text>
+                    </View>
+
+                    <View style = {stylesModal.dataModalContainer}>
+                      <Text style = {stylesModal.dataModal}>วันที่วางขาย</Text>
+                      <Text style = {stylesModal.dataModal}>{formatDate(DetailBook.publishedDate)}</Text>
+                    </View>
+
+                    <View style = {stylesModal.dataModalContainer}>
+                      <Text style = {stylesModal.dataModal}>จำนวนหน้า</Text>
+                      <Text style = {stylesModal.dataModal}>{DetailBook.pageCount} หน้า</Text>
+                    </View>
+
+                    <View style = {stylesModal.dataModalContainer}>
+                      <Text style = {stylesModal.dataModal}>ราคา</Text>
+                      <Text style = {stylesModal.dataModal}>{DetailBook.price} บาท</Text>
+                    </View>
+
                   </>
                 )}
               </View>
