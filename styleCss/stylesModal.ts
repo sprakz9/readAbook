@@ -4,8 +4,9 @@ import { StyleSheet } from "react-native";
 export const stylesModal = StyleSheet.create({
     Modalcontainer: {
         flex: 1,
-        padding : 30,
-        backgroundColor : "#626262"
+        padding : 10,
+        backgroundColor : "black",
+        borderRadius : 20
       },
     thumbnailModal : {
         width : 311,
@@ -31,6 +32,9 @@ export const stylesModal = StyleSheet.create({
     },
     Containerbtn : {
         flexDirection : "row",
+        justifyContent : "space-between",
+        alignItems : "center",
+        marginHorizontal : 20
     },
     btnBuyModal : {
         backgroundColor : "#00bf6c",
@@ -40,7 +44,6 @@ export const stylesModal = StyleSheet.create({
         marginTop : 10,
         justifyContent: 'center',
         alignItems : "center",
-        marginRight : 10
     },
     textbtnBuyModal : {
         color : "black",
@@ -48,7 +51,7 @@ export const stylesModal = StyleSheet.create({
         fontWeight : "bold"
     },
     btnBookMarks : {
-        backgroundColor : "pink",
+        backgroundColor : "#FDA5DA",
         width : 150,
         height : 40,
         borderRadius : 20,
@@ -58,7 +61,20 @@ export const stylesModal = StyleSheet.create({
     },
     descrtiptionModal : {
         color : "#ECECEC",
-        fontWeight : "bold",
-        marginTop : 4
+        marginLeft : 4,
+        marginTop : 30,
+        fontSize : 15
+    },
+    bthClosePopUp : {
+        color : "white",
+        fontSize : 15,
+        textAlign : "right",
+        marginBottom : 5,
+    },
+    dataModalContainer : {
+        marginTop : 10,
+    },
+    dataModal : {
+        color : "white",
     },
 })

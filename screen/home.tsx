@@ -5,7 +5,6 @@ import { useNavigation } from '@react-navigation/native';
 import Modal from 'react-native-modal';
 import { styles } from '../styleCss/styles';
 import { stylesModal } from '../styleCss/stylesModal';
-import Icon from 'react-native-vector-icons/FontAwesome';
 
 const Home = () => {
   const [product_book, setProduct] = useState<any[]>([]);
@@ -79,15 +78,12 @@ const Home = () => {
     </View>
           
           <Modal isVisible={isModalVisible}>
-            <TouchableOpacity onPress={onCloseModal}>
-                <Text style = {{
-                  color : "white",
-                  fontSize : 18,
-                  textAlign : "right"
-                }}>X</Text>
-             </TouchableOpacity>
+            
               <ScrollView>
               <View style = {stylesModal.Modalcontainer}>
+              <TouchableOpacity onPress={onCloseModal}>
+                <Text style = {stylesModal.bthClosePopUp}>X</Text>
+             </TouchableOpacity>
                 {DetailBook && (
                   <>
                   <View style = {stylesModal.thumbnailModalContainer}>
@@ -110,18 +106,16 @@ const Home = () => {
                   </View>
 
                   <View>
-                  <Text style = {{
-                    fontSize : 18,
-                    marginTop : 10,
-                    color : "white",
-                    fontWeight : "bold",
-                    }}>เรื่องย่อ</Text>
                     <Text style = {stylesModal.descrtiptionModal}>{DetailBook.description}</Text>
+                  </View>
+
+                  <View style = {stylesModal.dataModalContainer}>
+                    <Text style = {stylesModal.dataModal}>ซีรี่ส์ <Text>{DetailBook.title}</Text></Text>
+                    {/* <Text style = {stylesModal.dataModal}>วันที่วางขาย <Text>{DetailBook.publishedDate}</Text></Text> */}
                   </View>
                   </>
                 )}
               </View>
-              
               </ScrollView>
           </Modal>
   </>
