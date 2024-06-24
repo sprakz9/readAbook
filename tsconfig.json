@@ -4,6 +4,7 @@
   },
   "types": [
     "react-native",
-    "@types/react-navigation" // เพิ่ม @types/react-navigation 
+    "@types/react-navigation" ,// เพิ่ม @types/react-navigation 
+    "@types/expo__vector-icons"
   ]
 }
