@@ -3,18 +3,18 @@ import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {createMaterialBottomTabNavigator} from '@react-navigation/material-bottom-tabs';
 import Icon from 'react-native-vector-icons/Ionicons';
-// import { AntDesign, Entypo, Feather, FontAwesome, FontAwesome5,  Fontisto, Foundation, MaterialCommunityIcons, MaterialIcons 
-// } from '@expo/vector-icons';
 // import { Icon } from 'react-native-paper';
 // import Icon from 'react-native-vector-icons/FontAwesome';
 
-// import Login from './screen/Login';
+import Login from './screen/Login';
 import HomePage from './screen/Home';
 import MybookPage from './screen/Mybook';
+import FavBookPage from './screen/FavBook';
 
 
 
 const Tab = createMaterialBottomTabNavigator()
+
 function HomeTabs() {
   return (
     <Tab.Navigator>
@@ -22,7 +22,6 @@ function HomeTabs() {
       options={{
         tabBarIcon : () => (
           <Icon name = "library-outline" color={"green"} size={24} />
-          // <FontAwesome5 name="star" size={24} color="green" />
         )
       }}
       />
@@ -30,6 +29,13 @@ function HomeTabs() {
       options={{
         tabBarIcon : () => (
           <Icon name = "storefront-outline" color={"green"} size={24} />
+        )
+      }}
+      />
+      <Tab.Screen name='ที่ชื่นชอบ' component={FavBookPage}
+      options={{
+        tabBarIcon : () => (
+          <Icon name = "heart-outline" color={"green"} size={24} />
         )
       }}
       />
@@ -44,12 +50,16 @@ const App = () => {
 
     <NavigationContainer>
       <Stack.Navigator>
-        {/* <Stack.Screen
+        <Stack.Screen
           name="Login"
           component={Login}
+        />
+        {/* <Stack.Screen 
+          name="Home" 
+          component={HomePage} 
         /> */}
         <Stack.Screen 
-          name="HomeTabs" 
+          name="Home" 
           component={HomeTabs} 
           options={{ headerShown: false }} 
         />
