@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, StyleSheet, FlatList , Image , TouchableOpacity, Alert, Button, ScrollView  } from 'react-native';
+import { View, Text, StyleSheet, FlatList , Image , TouchableOpacity, Alert, Button, ScrollView , ActivityIndicator } from 'react-native';
 import firestore, { doc } from '@react-native-firebase/firestore';
 import { useNavigation } from '@react-navigation/native';
 import Modal from 'react-native-modal';
@@ -36,7 +36,11 @@ const Home = () => {
   }, []);
 
   if (loading) {
-    return <Text>Loading...</Text>;
+    return (
+      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+        <ActivityIndicator size="large" color="#0000ff" />
+      </View>
+    )
   }
 
   const handleTodetail = (item : any) => {

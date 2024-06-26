@@ -31,10 +31,13 @@ import LoadingDia from '../loadingDialog/LoadingDia';
       setPassword('');
     try {
       if (!textUserName || !textPassword) {
-        throw new Error("กรุณากรอกข้อมูลให้ครบ");
+          throw new Error("กรุณากรอกข้อมูลให้ครบ");
       }
-      await firebase.auth().signInWithEmailAndPassword(textUserName.trim(), textPassword.trim());
-      navigation.navigate("Home");
+        await firebase.auth().signInWithEmailAndPassword(textUserName.trim(), textPassword.trim());
+        navigation.navigate("Home");
+
+      // หลังจากเข้าสู่ระบบสำเร็จ จะดึงข้อมูล fetch favorite books
+      
     } catch (error : any) {
         if (error.message === "กรุณากรอกข้อมูลให้ครบ") {
           Alert.alert(error.message);
