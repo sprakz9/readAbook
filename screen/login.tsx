@@ -35,7 +35,7 @@ import Register from './Register';
           throw new Error("กรุณากรอกข้อมูลให้ครบ");
         }
         await firebase.auth().signInWithEmailAndPassword(textUserName.trim(), textPassword.trim());
-        // หากล็อคอินสำเร็จ อัพเดตฟิลด์ lastLogin ใน Firestore
+        // login เสร็จ อัพเดตฟิลด์ lastLogin ใน Firestore
         const currentUser = firebase.auth().currentUser;
         if (currentUser) {
           await firestore().collection('users').doc(currentUser.uid).update({

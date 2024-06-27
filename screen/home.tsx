@@ -1,12 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, StyleSheet, FlatList , Image , TouchableOpacity, Alert, Button, ScrollView , ActivityIndicator } from 'react-native';
-import firestore, { doc } from '@react-native-firebase/firestore';
+import firestore from '@react-native-firebase/firestore';
+import firebase from '@react-native-firebase/app';
 import { useNavigation } from '@react-navigation/native';
 import Modal from 'react-native-modal';
 import { styles } from '../styleCss/styles';
 import { stylesModal } from '../styleCss/stylesModal';
 import dayjs from 'dayjs';
 import Icon from 'react-native-vector-icons/Ionicons';
+
 
 
 const Home = () => {
@@ -59,9 +61,44 @@ const Home = () => {
     return dayjs(date).format('DD MMMM YYYY'); // รูปแบบวันที่ที่คุณต้องการ
   };
 
-  const addFavBook = () => {
-    
-  }
+  const addFavBook = async () => {
+    const currentUser = firebase.auth().currentUser; //ดึงข้อมูลผู้ใช้ที่ล็อกอินอยู่ในปัจจุบัน
+    if (currentUser && DetailBook) {
+      const userId = currentUser.uid;
+      const bookId = DetailBook.book_id; // ID ของหนังสือที่เลือก
+  
+      try {
+        const userDocRef = firestore().collection('users').doc(userId);
+        const userDoc = await userDocRef.get();
+  
+        if (userDoc.exists) {
+          const userData : any = userDoc.data();
+          if (userData.FavMyBook) {
+            // ถ้ามีฟิลด์ FavMyBook อยู่แล้ว
+            await userDocRef.update({
+              FavMyBook: firestore.FieldValue.arrayUnion(bookId)
+            });
+          } else {
+            // ถ้าไม่มีฟิลด์ FavMyBook
+            await userDocRef.set({
+              FavMyBook: [bookId]
+            }, { merge: true });
+          }
+        } else {
+          // ถ้าเอกสารผู้ใช้ไม่มีอยู่
+          await userDocRef.set({
+            FavMyBook: [bookId]
+          });
+        }
+        Alert.alert('Added to Favorites');
+      } catch (error) {
+        console.error('Error adding to favorites: ', error);
+        Alert.alert('Error adding to favorites');
+      } finally {
+      }
+    }
+  };
+  
 
 
   return (
@@ -119,7 +156,7 @@ const Home = () => {
                         <Text style = {stylesModal.textbtnBuyModal}>ซื้อ {DetailBook.price} บาท</Text>
                       </TouchableOpacity>
 
-                      <TouchableOpacity style = {stylesModal.btnBookMarks}>
+                      <TouchableOpacity style = {stylesModal.btnBookMarks} onPress={addFavBook}>
                         <Text style = {stylesModal.textbtnBuyModal}>Bookmarks</Text>
                       </TouchableOpacity>
                   </View>
