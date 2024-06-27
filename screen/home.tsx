@@ -6,6 +6,7 @@ import Modal from 'react-native-modal';
 import { styles } from '../styleCss/styles';
 import { stylesModal } from '../styleCss/stylesModal';
 import dayjs from 'dayjs';
+import Icon from 'react-native-vector-icons/Ionicons';
 
 
 const Home = () => {
@@ -57,6 +58,10 @@ const Home = () => {
   const formatDate = (date : any) => {
     return dayjs(date).format('DD MMMM YYYY'); // รูปแบบวันที่ที่คุณต้องการ
   };
+
+  const addFavBook = () => {
+    
+  }
 
 
   return (
@@ -115,7 +120,7 @@ const Home = () => {
                       </TouchableOpacity>
 
                       <TouchableOpacity style = {stylesModal.btnBookMarks}>
-                        <Text style = {stylesModal.textbtnBuyModal}>Bookmarks +</Text>
+                        <Text style = {stylesModal.textbtnBuyModal}>Bookmarks</Text>
                       </TouchableOpacity>
                   </View>
 

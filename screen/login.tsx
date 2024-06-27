@@ -16,7 +16,8 @@ import { useNavigation } from '@react-navigation/native';
 import { firebase } from '@react-native-firebase/auth';
 import auth from '@react-native-firebase/auth';
 import LoadingDia from '../loadingDialog/LoadingDia';
-
+import firestore from '@react-native-firebase/firestore';
+import Register from './Register';
 
   const Login = () => {
     
@@ -29,14 +30,20 @@ import LoadingDia from '../loadingDialog/LoadingDia';
       setLoading(true); // เริ่มโหลด
       setUserName('');
       setPassword('');
-    try {
-      if (!textUserName || !textPassword) {
+      try {
+        if (!textUserName || !textPassword) {
           throw new Error("กรุณากรอกข้อมูลให้ครบ");
-      }
+        }
         await firebase.auth().signInWithEmailAndPassword(textUserName.trim(), textPassword.trim());
+        // หากล็อคอินสำเร็จ อัพเดตฟิลด์ lastLogin ใน Firestore
+        const currentUser = firebase.auth().currentUser;
+        if (currentUser) {
+          await firestore().collection('users').doc(currentUser.uid).update({
+            lastLogin: firebase.firestore.FieldValue.serverTimestamp()
+          });
+        }
         navigation.navigate("Home");
 
-      // หลังจากเข้าสู่ระบบสำเร็จ จะดึงข้อมูล fetch favorite books
       
     } catch (error : any) {
         if (error.message === "กรุณากรอกข้อมูลให้ครบ") {
@@ -118,8 +125,8 @@ import LoadingDia from '../loadingDialog/LoadingDia';
         }}>
           ไม่มีบัญชี ?
         </Text>
-        <TouchableOpacity style = {styles.btn_register}>
-        <Text style = {styles.text_register}>สมัครสมาชิก</Text>
+        <TouchableOpacity style = {styles.btn_register} onPress={() => navigation.navigate("Register")}>
+          <Text style = {styles.text_register}>สมัครสมาชิก</Text>
         </TouchableOpacity>
       </View>
 
@@ -229,8 +236,6 @@ const styles = StyleSheet.create({
         alignSelf: 'center',
         marginRight: 26,
   },
-  
-
 })
 
 export default Login

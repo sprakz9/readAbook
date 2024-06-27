@@ -10,6 +10,7 @@ import Login from './screen/Login';
 import HomePage from './screen/Home';
 import MybookPage from './screen/Mybook';
 import FavBookPage from './screen/FavBook';
+import RegisterPage from './screen/Register';
 
 
 
@@ -50,14 +51,8 @@ const App = () => {
 
     <NavigationContainer>
       <Stack.Navigator initialRouteName="Login">
-        <Stack.Screen
-          name="Login"
-          component={Login}
-        />
-        {/* <Stack.Screen 
-          name="Home" 
-          component={HomePage} 
-        /> */}
+        <Stack.Screen name="Login"component={Login}/>
+        <Stack.Screen name="Register" component={RegisterPage}/>
         <Stack.Screen 
           name="Home" 
           component={HomeTabs} 
