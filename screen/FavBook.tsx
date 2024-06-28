@@ -69,16 +69,21 @@ const FavBook = () => {
   }
 
   return (
+    <>
+    <View style = {styles.headerTextContainer}>
+      <Text style = {styles.headerText}>หนังสือที่ชอบ</Text>
+    </View>
+
     <View style={styles.container}>
       <FlatList
         data={favBooks}
         keyExtractor={(item, index) => index.toString()}
         renderItem={({ item }) => (
           <View style={styles.bookContainer}>
-            <Image source={{ uri: item.thumbnail }} style={styles.thumbnail} />
-            <Text style={styles.title}>{item.title}</Text>
-            <Text style={styles.author}>{item.authors}</Text>
+            <Image source={{ uri: item.thumbnail }} style={styles.thumbnail}/>
+            <Text style = {styles.title} numberOfLines={2} ellipsizeMode='tail'>{item.title}</Text>
           </View>
+          
         )}
         refreshControl={
           <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
@@ -86,6 +91,7 @@ const FavBook = () => {
         showsVerticalScrollIndicator={false}
       />
     </View>
+    </>
   )
 }
 
@@ -93,25 +99,35 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 16,
-    backgroundColor: 'white',
+    backgroundColor: 'black',
   },
   bookContainer: {
     marginBottom: 16,
     flexDirection: 'row',
+    backgroundColor : "gray",
+    borderRadius : 10,
   },
-  thumbnail: {
-    width: 100,
-    height: 150,
-    marginRight: 16,
+  thumbnail : {
+    width: 110,
+    height: 160,
   },
-  title: {
-    fontSize: 18,
-    fontWeight: 'bold',
+  title : {
+    color : "white",
+    fontSize : 18,
+    marginLeft : 8,
+    marginTop : 4,
+    flex : 1
   },
-  author: {
-    fontSize: 16,
-    color: 'gray',
+  headerTextContainer : {
+    height : 45,
+    justifyContent : "center",
+    textAlign : "center"
   },
+  headerText :{
+    fontSize : 25,
+    textAlign : "center",
+    color : "black",
+  }
 });
 
 export default FavBook

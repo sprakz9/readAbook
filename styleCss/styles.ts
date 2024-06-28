@@ -3,7 +3,7 @@ import { StyleSheet } from 'react-native';
 export const styles = StyleSheet.create({
     container: {
       flex: 1,
-      backgroundColor: '#fff',
+      backgroundColor: 'gray',
       padding: 20,
     },
     thumbnail: {
@@ -19,19 +19,20 @@ export const styles = StyleSheet.create({
     productContainer: {
       flex: 1,
       marginBottom: 20,
-      borderRadius : 2,
+      borderRadius : 8,
       borderWidth : 0.5,
       margin : 1,
       position: 'relative',
       overflow : "hidden",
       height: 260, 
-      width : 170,
+      width : 140,
       marginHorizontal: 5,
+      backgroundColor : "black"
     },
     title: {
       fontSize: 16,
       fontWeight: 'bold',
-      color : "black",
+      color : "white",
       textAlign : "left",
       paddingHorizontal: 5,
       marginTop : 2
@@ -58,6 +59,7 @@ export const styles = StyleSheet.create({
     author : {
       textAlign : "left",
       paddingHorizontal : 5,
+      color : "gray"
     },
     headerText : {
       textAlign : "center",

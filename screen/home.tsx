@@ -126,7 +126,6 @@ const Home = () => {
               <View style = {styles.box_price}>
                 <Text style={styles.price}>฿ {item.price}</Text>
               </View>
-              
           </View>
           )}
           showsHorizontalScrollIndicator={false}
