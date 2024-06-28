@@ -1,5 +1,15 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, StyleSheet, FlatList, Image, TouchableOpacity, ActivityIndicator , RefreshControl } from 'react-native';
+import { 
+  View, 
+  Text, 
+  StyleSheet,
+  FlatList, 
+  Image, 
+  TouchableOpacity, 
+  ActivityIndicator , 
+  RefreshControl, 
+  ScrollView 
+} from 'react-native';
 import firestore from '@react-native-firebase/firestore';
 import { firebase } from '@react-native-firebase/auth';
 import { useNavigation } from '@react-navigation/native';
