@@ -8,11 +8,13 @@ import {
   TouchableOpacity, 
   ActivityIndicator , 
   RefreshControl, 
-  ScrollView 
+  ScrollView ,
+  StatusBar,
 } from 'react-native';
 import firestore from '@react-native-firebase/firestore';
 import { firebase } from '@react-native-firebase/auth';
 import { useNavigation } from '@react-navigation/native';
+import { Button } from 'react-native-paper';
 
 const FavBook = () => {
   const [favBooks, setFavBooks] = useState<any[]>([]);
@@ -70,8 +72,9 @@ const FavBook = () => {
 
   return (
     <>
+    
     <View style = {styles.headerTextContainer}>
-      <Text style = {styles.headerText}>หนังสือที่ชอบ</Text>
+      <Text style = {styles.headerText}>ลิสต์หนังสือที่ชอบ</Text>
     </View>
 
     <View style={styles.container}>
@@ -79,11 +82,19 @@ const FavBook = () => {
         data={favBooks}
         keyExtractor={(item, index) => index.toString()}
         renderItem={({ item }) => (
-          <View style={styles.bookContainer}>
-            <Image source={{ uri: item.thumbnail }} style={styles.thumbnail}/>
-            <Text style = {styles.title} numberOfLines={2} ellipsizeMode='tail'>{item.title}</Text>
-          </View>
-          
+        
+            <View style={styles.bookContainer}>
+              <Image source={{ uri: item.thumbnail }} style={styles.thumbnail}/>
+                <View style = {styles.titleContainer}>
+                  <Text style = {styles.title} numberOfLines={2} ellipsizeMode='tail'>{item.title}</Text>
+                  <Text style = {styles.autors}>{item.authors}</Text>
+                  <TouchableOpacity style = {styles.btnPrice}>
+                    <Text style = {styles.price}>ราคา : {item.price} ซื้อเลย!</Text>
+                  </TouchableOpacity>
+                </View>
+                
+            </View>   
+  
         )}
         refreshControl={
           <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
@@ -99,13 +110,25 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 16,
-    backgroundColor: 'black',
+    backgroundColor: 'gray',
   },
   bookContainer: {
     marginBottom: 16,
     flexDirection: 'row',
-    backgroundColor : "gray",
+    backgroundColor : "black",
     borderRadius : 10,
+  },
+  titleContainer : {
+    flex : 1,
+    marginLeft : 10,
+    marginTop : 4,
+    marginBottom : 50
+  },
+  autors : {
+    color: 'gray',
+    fontSize: 14,
+    marginBottom : 8,
+    marginTop : 8
   },
   thumbnail : {
     width: 110,
@@ -113,21 +136,33 @@ const styles = StyleSheet.create({
   },
   title : {
     color : "white",
-    fontSize : 18,
-    marginLeft : 8,
-    marginTop : 4,
+    fontSize : 17,
     flex : 1
   },
   headerTextContainer : {
     height : 45,
     justifyContent : "center",
-    textAlign : "center"
+    backgroundColor: '#00bf6c',
   },
   headerText :{
     fontSize : 25,
+    textAlign : "left",
+    color : "white",
+    marginLeft : 16
+  },
+  btnPrice : {
+    backgroundColor : "#00bf6c",
+    width : 130,
+    borderRadius : 8,
+    justifyContent : "center",
     textAlign : "center",
-    color : "black",
-  }
+  },
+  price : {
+    fontSize : 14,
+    color : "white",
+    fontWeight : "bold",
+    textAlign : "center",
+  },
 });
 
 export default FavBook

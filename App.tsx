@@ -11,6 +11,7 @@ import HomePage from './screen/Home';
 import MybookPage from './screen/Mybook';
 import FavBookPage from './screen/FavBook';
 import RegisterPage from './screen/Register';
+import ProfilePage from './screen/Profile';
 
 
 
@@ -37,6 +38,13 @@ function HomeTabs() {
       options={{
         tabBarIcon : () => (
           <Icon name = "heart-outline" color={"green"} size={24} />
+        )
+      }}
+      />
+      <Tab.Screen name='โปรไฟล์' component={ProfilePage}
+      options={{
+        tabBarIcon : () => (
+          <Icon name = "person-outline" color={"green"} size={24} />
         )
       }}
       />

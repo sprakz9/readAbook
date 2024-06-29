@@ -1,5 +1,17 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, StyleSheet, FlatList , Image , TouchableOpacity, Alert, Button, ScrollView , ActivityIndicator } from 'react-native';
+import { 
+  View, 
+  Text, 
+  StyleSheet, 
+  FlatList , 
+  Image , 
+  TouchableOpacity, 
+  Alert, 
+  Button, 
+  ScrollView , 
+  ActivityIndicator,
+  StatusBar 
+} from 'react-native';
 import firestore from '@react-native-firebase/firestore';
 import firebase from '@react-native-firebase/app';
 import { useNavigation } from '@react-navigation/native';
@@ -103,6 +115,7 @@ const Home = () => {
 
   return (
     <>
+    <StatusBar backgroundColor="#00bf6c" barStyle="light-content"/>
       <View style = {styles.topHeader_View}>
           <Text style = {styles.topHeader_Text}>readAbook</Text>
       </View>
@@ -168,7 +181,7 @@ const Home = () => {
 
                     <View style = {stylesModal.dataModalContainer}>
                       <Text style = {stylesModal.dataModal}>ซีรี่ส์</Text>
-                      <Text style = {stylesModal.dataModal}>{DetailBook.title}</Text>
+                      <Text style = {stylesModal.dataModal}>{DetailBook.mainName}</Text>
                     </View>
 
                     <View style = {stylesModal.dataModalContainer}>
