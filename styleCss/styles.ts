@@ -15,6 +15,8 @@ export const styles = StyleSheet.create({
     },
     thumbnailContainer : {
       alignItems: 'center',
+      marginRight : 3,
+      marginTop : 1
     },
     productContainer: {
       flex: 1,
@@ -25,7 +27,7 @@ export const styles = StyleSheet.create({
       position: 'relative',
       overflow : "hidden",
       height: 260, 
-      width : 140,
+      width : 130,
       marginHorizontal: 5,
       backgroundColor : "black"
     },

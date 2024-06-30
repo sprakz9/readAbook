@@ -134,8 +134,8 @@ const Home = () => {
                 <Image source={{ uri: item.thumbnail }} style={styles.thumbnail}/>
               </TouchableOpacity>
             </View>
-                <Text style={styles.title} numberOfLines={2} ellipsizeMode='tail'>{item.title}</Text> 
-                <Text style = {styles.author}>{item.authors}</Text>
+                <Text style={styles.title} numberOfLines={1} ellipsizeMode='tail'>{item.title}</Text> 
+                <Text style = {styles.author} numberOfLines={1} ellipsizeMode='tail'>{item.authors}</Text>
               <View style = {styles.box_price}>
                 <Text style={styles.price}>฿ {item.price}</Text>
               </View>
