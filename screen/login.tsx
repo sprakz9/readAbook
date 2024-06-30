@@ -22,19 +22,19 @@ import Register from './Register';
   const Login = () => {
     
     const navigation: any = useNavigation();
-    const [textUserName, setUserName] = React.useState('');
+    const [textEmail, setEmail] = React.useState('');
     const [textPassword, setPassword] = React.useState('');
     const [loading, setLoading] = useState(false); //สำหรับ Loading ระหว่าง Login (false คือ สถานะการโหลด)
 
     const handleLogin = async () => {
       setLoading(true); // เริ่มโหลด
-      setUserName('');
+      setEmail('');
       setPassword('');
       try {
-        if (!textUserName || !textPassword) {
+        if (!textEmail || !textPassword) {
           throw new Error("กรุณากรอกข้อมูลให้ครบ");
         }
-        await firebase.auth().signInWithEmailAndPassword(textUserName.trim(), textPassword.trim());
+        await firebase.auth().signInWithEmailAndPassword(textEmail.trim(), textPassword.trim());
         // login เสร็จ อัพเดตฟิลด์ lastLogin ใน Firestore
         const currentUser = firebase.auth().currentUser;
         if (currentUser) {
@@ -102,8 +102,8 @@ import Register from './Register';
 
       <TextInput
         style={styles.input}
-        onChangeText={setUserName}
-        value={textUserName}
+        onChangeText={setEmail}
+        value={textEmail}
         placeholder="Username"
       />
       <TextInput
