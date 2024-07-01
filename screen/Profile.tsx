@@ -8,7 +8,8 @@ import {
   ScrollView , 
   Alert , 
   Image , 
-  ImageBackground , 
+  ImageBackground, 
+  TouchableOpacity, 
 } from 'react-native';
 import firebase from '@react-native-firebase/auth';
 import firestore from '@react-native-firebase/firestore';
@@ -86,7 +87,8 @@ const Profile = () => {
     //   <Button title="แก้ไขโปรไฟล์" onPress={() => EditProfile()} /> */}
     // </ScrollView>
 
-    <View style={styles.container}>
+    <ScrollView>
+      <View style={styles.container}>
       <ImageBackground
         source={{ uri : profile.imgPro }}
         style={styles.background}
@@ -109,27 +111,40 @@ const Profile = () => {
           <Text style={styles.username}>{profile.username}</Text>
 
           <View style = {styles.dataModalContainer}>
-            <Text style = {styles.dataModalTopic}>Email</Text>
+            <Text style = {styles.dataModalTopic}><Icon name = "mail-outline" color={"white"} size={15}/> Email</Text>
             <Text style = {styles.dataModal}>{profile.email}</Text>
           </View>
 
           
 
           <View style = {styles.dataModalContainer}>
-            <Text style = {styles.dataModalTopic}>Telephone</Text>
+            <Text style = {styles.dataModalTopic}><Icon name = "call-outline" color={"white"} size={15}/> Telephone</Text>
             <Text style = {styles.dataModal}>{profile.tel}</Text>
           </View>
 
           <View style = {styles.dataModalContainer}>
-          <Text style = {styles.dataModalTopic}>User id
-          <Icon name = "person-outline" color={"green"} size={24} /> {/* ทดสอบ icon */}
-          </Text>
-            <Text style = {styles.dataModal}>{profile.userID}</Text>
+            <Text style = {styles.dataModalTopic}>
+              <Icon name = "person-outline" color={"white"} size={15}/> User-id
+            </Text>
+          <Text style = {styles.dataModal}>{profile.userID}</Text>
+          </View>
+
+          {/* <View style={styles.line}></View> */}
+
+          <View>
+            <TouchableOpacity style = {styles.btn_edit_profile}>
+              <Text style = {styles.btn_text_edit_profile}>แก้ไขข้อมูลส่วนตัว</Text>
+            </TouchableOpacity>
+
+            <TouchableOpacity style = {styles.btn_edit_profile}>
+              <Text style = {styles.btn_text_edit_profile}>xx</Text>
+            </TouchableOpacity>
           </View>
 
         </View>
-      </ImageBackground>
-    </View>
+        </ImageBackground>
+      </View>
+    </ScrollView>
   );
 };
 
@@ -163,13 +178,15 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     marginTop: 2,
     padding: 10,
+    height : 500
   },
   username: {
     fontSize: 25,
     fontWeight: 'bold',
-    color: 'white',
+    color: '#ffd700',
     textAlign : "center",
-    marginBottom : 6
+    marginBottom : 35,
+    marginTop : 10,
   },
   subtitle: {
     color: 'white',
@@ -190,14 +207,33 @@ const styles = StyleSheet.create({
   },
   dataModal : {
     color : "white",
-    fontSize : 16,
+    fontSize : 14,
     marginTop : 6
   },
   dataModalTopic : {
     color : "white",
-    fontSize : 20,
+    fontSize : 18,
     marginTop : 6,
     fontWeight : "bold"
+  },
+  line: {
+    height: 2,
+    backgroundColor: 'gray',
+    margin: 10,
+  },
+  btn_text_edit_profile : {
+    color : "White",
+    marginHorizontal : 10,
+    fontSize : 15,
+  },
+  btn_edit_profile: {
+    marginTop : 12,
+    paddingVertical: 10,
+    paddingHorizontal: 14,
+    borderRadius: 2,
+    borderWidth: 1,
+    width : 500,
+    borderColor: 'gray', // สีของกรอบ
   },
 });
 
