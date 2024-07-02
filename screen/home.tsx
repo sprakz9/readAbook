@@ -109,8 +109,10 @@ const Home = () => {
       }
     }
   };
-  
 
+  const buyBookfunc = (title : String) => {
+    Alert.alert(title.toString())
+  };
 
   return (
     <>
@@ -163,7 +165,7 @@ const Home = () => {
                   </View>
 
                   <View style = {stylesModal.Containerbtn}>
-                      <TouchableOpacity style = {stylesModal.btnBuyModal}>
+                      <TouchableOpacity style = {stylesModal.btnBuyModal} onPress={() => buyBookfunc(DetailBook.title)}>
                         <Text style = {stylesModal.textbtnBuyModal}>ซื้อ {DetailBook.price} บาท</Text>
                       </TouchableOpacity>
 
