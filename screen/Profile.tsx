@@ -124,22 +124,43 @@ const Profile = () => {
 
           <View style = {styles.dataModalContainer}>
             <Text style = {styles.dataModalTopic}>
-              <Icon name = "person-outline" color={"white"} size={15}/> User-id
+              <Icon name = "person-circle-outline" color={"white"} size={15}/> User-id
             </Text>
           <Text style = {styles.dataModal}>{profile.userID}</Text>
           </View>
 
+          <View style = {styles.dataModalContainer}>
+            <Text style = {styles.dataModalTopic}>
+              <Icon name = "wallet-outline" color={"white"} size={15}/> Coin
+            </Text>
+          <Text style = {[styles.dataModal , {color : "gold"}]}>{profile.readAbook_coin}</Text>
+          </View>
+
           {/* <View style={styles.line}></View> */}
 
-          <View>
+          
             <TouchableOpacity style = {styles.btn_edit_profile}>
               <Text style = {styles.btn_text_edit_profile}>แก้ไขข้อมูลส่วนตัว</Text>
             </TouchableOpacity>
 
             <TouchableOpacity style = {styles.btn_edit_profile}>
-              <Text style = {styles.btn_text_edit_profile}>xx</Text>
+              <Text style = {styles.btn_text_edit_profile}>เปลี่ยนพาสเวิร์ด</Text>
             </TouchableOpacity>
-          </View>
+
+            <TouchableOpacity style = {styles.btn_edit_profile}>
+              <Text style = {styles.btn_text_edit_profile}>ออกจากระบบ</Text>
+            </TouchableOpacity>
+
+            <Text style = {styles.text_for_topic}>ข้อมูลของฉัน</Text>
+
+            <TouchableOpacity style = {styles.btn_edit_profile}>
+              <Text style = {styles.btn_text_edit_profile}>ประวัติการซื้อของฉัน</Text>
+            </TouchableOpacity>
+
+            <TouchableOpacity style = {styles.btn_edit_profile}>
+              <Text style = {styles.btn_text_edit_profile}>เติมคอยด์</Text>
+            </TouchableOpacity>
+          
 
         </View>
         </ImageBackground>
@@ -178,7 +199,7 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     marginTop: 2,
     padding: 10,
-    height : 500
+    height : 550
   },
   username: {
     fontSize: 25,
@@ -222,18 +243,26 @@ const styles = StyleSheet.create({
     margin: 10,
   },
   btn_text_edit_profile : {
-    color : "White",
+    color : "white",
     marginHorizontal : 10,
     fontSize : 15,
   },
   btn_edit_profile: {
     marginTop : 12,
     paddingVertical: 10,
-    paddingHorizontal: 14,
+    paddingHorizontal: 8,
     borderRadius: 2,
-    borderWidth: 1,
-    width : 500,
+    borderWidth: 0.5,
+    // width : 500,
     borderColor: 'gray', // สีของกรอบ
+  },
+  text_for_topic : {
+    fontWeight : "bold",
+    backgroundColor : "gray",
+    marginTop : 8,
+    height : 50,
+    paddingVertical: 15.5,
+    paddingHorizontal: 18,
   },
 });
 

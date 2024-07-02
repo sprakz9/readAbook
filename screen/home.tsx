@@ -78,11 +78,10 @@ const Home = () => {
     if (currentUser && DetailBook) {
       const userId = currentUser.uid;
       const bookId = DetailBook.book_id; // ID ของหนังสือที่เลือก
-  
+
       try {
         const userDocRef = firestore().collection('users').doc(userId);
         const userDoc = await userDocRef.get();
-  
         if (userDoc.exists) {
           const userData : any = userDoc.data();
           if (userData.FavMyBook) {
