@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect , useCallback } from 'react';
 import { 
   View, 
   Text, 
@@ -10,7 +10,8 @@ import {
   Button, 
   ScrollView , 
   ActivityIndicator,
-  StatusBar 
+  StatusBar ,
+  RefreshControl
 } from 'react-native';
 import firestore from '@react-native-firebase/firestore';
 import firebase from '@react-native-firebase/app';
@@ -20,6 +21,7 @@ import { styles } from '../styleCss/styles';
 import { stylesModal } from '../styleCss/stylesModal';
 import dayjs from 'dayjs';
 import Icon from 'react-native-vector-icons/Ionicons';
+import auth from '@react-native-firebase/auth';
 
 
 
@@ -29,24 +31,40 @@ const Home = () => {
   const navigation: any = useNavigation();
   const [isModalVisible, setModalVisible] = useState(false); //Pop up ยังไม่ได้เรียกใช้ ให้เป็น False
   const [DetailBook, setSelectedBook] = useState<any>(null);
-
+  const [userCoins, setUserCoins] = useState(0);
+  const [refreshing, setRefreshing] = useState(false);
+  
   useEffect(() => {
-    const fetchData = async() => {
-      try {
-        const querySnapshot = await firestore().collection('product_book').get();
-        const productsData = querySnapshot.docs.map(doc => ({ 
-          ...doc.data(),
-           book_id: doc.id,
-           publishedDate: doc.data().publishedDate.toDate(),
-          }));
-        setProduct(productsData);
-      } catch (error) {
-        console.error('Error fetching products: ', error);
-      } finally {
-        setLoading(false);
-      }
-    };
+    fetchData();
+  }, []);
 
+  const fetchData = async () => {
+    try {
+      const querySnapshot = await firestore().collection('product_book').get();
+      const productsData = querySnapshot.docs.map(doc => ({ 
+        ...doc.data(),
+        book_id: doc.id,
+        publishedDate: doc.data().publishedDate.toDate(),
+      }));
+      setProduct(productsData);
+      const currentUser = auth().currentUser;
+      if (currentUser) {
+        const userDoc = await firestore().collection('users').doc(currentUser.uid).get();
+        if (userDoc.exists) {
+          const userData : any = userDoc.data();
+          setUserCoins(userData.readAbook_coin);
+        }
+      }
+    } catch (error) {
+      console.error('Error fetching products: ', error);
+    } finally {
+      setLoading(false);
+      setRefreshing(false);
+    }
+  };
+
+  const onRefresh = useCallback(() => {
+    setRefreshing(true);
     fetchData();
   }, []);
 
@@ -110,8 +128,36 @@ const Home = () => {
     }
   };
 
-  const buyBookfunc = (title : String) => {
-    Alert.alert(title.toString())
+  const buyBookfunc = async () => {
+    const currentUser = firebase.auth().currentUser;
+    if (currentUser && DetailBook) {
+      const userId = currentUser.uid;
+      const PurchasedBook = DetailBook.book_id;
+      const bookPrice = DetailBook.price;
+
+      try {
+        const userDocRef = firestore().collection('users').doc(userId);
+        const userDoc = await userDocRef.get();
+
+        if (userDoc.exists) {
+          const userData : any = userDoc.data();
+          if (userData.readAbook_coin >= bookPrice) {
+            await userDocRef.update({
+              readAbook_coin: userData.readAbook_coin - bookPrice,
+              PurchasedBook: firestore.FieldValue.arrayUnion(PurchasedBook),
+            });
+
+            Alert.alert("ซื้อหนังสือสำเร็จ");
+            setUserCoins(userData.readAbook_coin - bookPrice);
+          } else {
+            Alert.alert("เหรียญไม่เพียงพอ กรุณาเติมเหรียญ");
+          }
+        }
+      } catch (error) {
+        console.error('Error purchasing book: ', error);
+        Alert.alert('Error', 'An error occurred while purchasing the book.');
+      }
+    }
   };
 
   return (
@@ -143,6 +189,9 @@ const Home = () => {
           </View>
           )}
           showsHorizontalScrollIndicator={false}
+          refreshControl={
+            <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+          }
         /> 
     </View>
           
@@ -165,7 +214,7 @@ const Home = () => {
                   </View>
 
                   <View style = {stylesModal.Containerbtn}>
-                      <TouchableOpacity style = {stylesModal.btnBuyModal} onPress={() => buyBookfunc(DetailBook.title)}>
+                      <TouchableOpacity style = {stylesModal.btnBuyModal} onPress={buyBookfunc}>
                         <Text style = {stylesModal.textbtnBuyModal}>ซื้อ {DetailBook.price} บาท</Text>
                       </TouchableOpacity>
 

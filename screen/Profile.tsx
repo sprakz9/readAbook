@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect , useCallback  } from 'react';
 import { 
   View, 
   Text, 
@@ -10,6 +10,7 @@ import {
   Image , 
   ImageBackground, 
   TouchableOpacity, 
+  RefreshControl,
 } from 'react-native';
 import firebase from '@react-native-firebase/auth';
 import firestore from '@react-native-firebase/firestore';
@@ -24,27 +25,34 @@ const Profile = () => {
   const [profile, setProfile] = useState<any>(null);
   const [loading, setLoading] = useState(true);
   const navigation: any = useNavigation();
+  const [refreshing, setRefreshing] = React.useState(false);
+
+  const fetchProfile = async () => {
+    const currentUser = auth().currentUser;
+    if (currentUser) {
+      const userId = currentUser.uid;
+      const userDocRef = firestore().collection('users').doc(userId);
+
+      try {
+        const userDoc = await userDocRef.get();
+        if (userDoc.exists) {
+          setProfile(userDoc.data());
+        }
+      } catch (error) {
+        console.error('Error fetching profile: ', error);
+      } finally {
+        setLoading(false);
+        setRefreshing(false);
+      }
+    }
+  };
+
+  const onRefresh = useCallback(() => {
+    setRefreshing(true);
+    fetchProfile();
+  }, []);
 
   useEffect(() => {
-    const fetchProfile = async () => {
-      const currentUser = auth().currentUser;
-      if (currentUser) {
-        const userId = currentUser.uid;
-        const userDocRef = firestore().collection('users').doc(userId);
-
-        try {
-          const userDoc = await userDocRef.get();
-          if (userDoc.exists) {
-            setProfile(userDoc.data());
-          }
-        } catch (error) {
-          console.error('Error fetching profile: ', error);
-        } finally {
-          setLoading(false);
-        }
-      }
-    };
-
     fetchProfile();
   }, []);
 
@@ -70,24 +78,10 @@ const Profile = () => {
   }
 
   return (
-    // <ScrollView contentContainerStyle={styles.container}>
-    //   {/* <Image
-    //   style = {styles.imgProfile}
-    //   source={{uri : profile.imgPro}}
-    //   />
-    //   <Text style={styles.label}>ชื่อผู้ใช้:</Text>
-    //   <Text style={styles.value}>{profile.username}</Text>
-      
-    //   <Text style={styles.label}>อีเมล:</Text>
-    //   <Text style={styles.value}>{profile.email}</Text>
-      
-    //   <Text style={styles.label}>การล็อกอินครั้งล่าสุด:</Text>
-    //   <Text style={styles.value}>{profile.lastLogin?.toDate().toString()}</Text>
-      
-    //   <Button title="แก้ไขโปรไฟล์" onPress={() => EditProfile()} /> */}
-    // </ScrollView>
-
-    <ScrollView>
+    
+    <ScrollView refreshControl={
+      <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+    }>
       <View style={styles.container}>
       <ImageBackground
         source={{ uri : profile.imgPro }}
