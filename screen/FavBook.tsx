@@ -140,7 +140,7 @@ const styles = StyleSheet.create({
     flex : 1
   },
   headerTextContainer : {
-    height : 45,
+    height : 65,
     justifyContent : "center",
     backgroundColor: '#00bf6c',
   },
