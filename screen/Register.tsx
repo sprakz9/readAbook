@@ -34,6 +34,10 @@ const Register = () => {
         email: textEmail.trim(),
         createDate: firestore.FieldValue.serverTimestamp(),
         lastLogin: firestore.FieldValue.serverTimestamp(),
+        PurchasedBook: [], //Array
+        imgPro: "", // string
+        readAbook_coin: 0, // number
+        tel : "",
         // customField: ''  ตัวอย่างการสร้าง Field เปล่า เนาะ
 
       });
