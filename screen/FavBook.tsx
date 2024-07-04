@@ -148,7 +148,8 @@ const styles = StyleSheet.create({
     fontSize : 25,
     textAlign : "left",
     color : "white",
-    marginLeft : 16
+    marginLeft : 16,
+    fontWeight : "bold"
   },
   btnPrice : {
     backgroundColor : "#00bf6c",

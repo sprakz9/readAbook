@@ -18,6 +18,7 @@ import { useNavigation } from '@react-navigation/native';
 import auth from '@react-native-firebase/auth';
 import { BlurView } from "@react-native-community/blur";
 import Icon from 'react-native-vector-icons/Ionicons';
+import BuyCoinPage from './BuyCoinPage';
 
 
 
@@ -74,7 +75,19 @@ const Profile = () => {
   }
 
   const EditProfile = () => {
-    Alert.alert("เดี๋ยวค่อยทำน้า")
+    Alert.alert("แก้ไขโปรไฟล์")
+  }
+
+  const EditPassword = () => {
+    Alert.alert("แก้ไขพาสเวิร์ด")
+  }
+
+  const Myorder = () => {
+    Alert.alert("ประวัติการซื้อ")
+  }
+
+  const BuyCoin = () => {
+    navigation.navigate("BuyCoinPage")
   }
 
   return (
@@ -127,17 +140,17 @@ const Profile = () => {
             <Text style = {styles.dataModalTopic}>
               <Icon name = "wallet-outline" color={"white"} size={15}/> Coin
             </Text>
-          <Text style = {[styles.dataModal , {color : "gold"}]}>{profile.readAbook_coin}</Text>
+          <Text style = {[styles.dataModal , {color : "gold"}]}>{profile.readAbook_coin} Coin</Text>
           </View>
 
           {/* <View style={styles.line}></View> */}
 
           
-            <TouchableOpacity style = {styles.btn_edit_profile}>
+            <TouchableOpacity style = {styles.btn_edit_profile} onPress={EditProfile}>
               <Text style = {styles.btn_text_edit_profile}>แก้ไขข้อมูลส่วนตัว</Text>
             </TouchableOpacity>
 
-            <TouchableOpacity style = {styles.btn_edit_profile}>
+            <TouchableOpacity style = {styles.btn_edit_profile} onPress={EditPassword}>
               <Text style = {styles.btn_text_edit_profile}>เปลี่ยนพาสเวิร์ด</Text>
             </TouchableOpacity>
 
@@ -147,11 +160,11 @@ const Profile = () => {
 
             <Text style = {styles.text_for_topic}>ข้อมูลของฉัน</Text>
 
-            <TouchableOpacity style = {styles.btn_edit_profile}>
+            <TouchableOpacity style = {styles.btn_edit_profile} onPress={Myorder}>
               <Text style = {styles.btn_text_edit_profile}>ประวัติการซื้อของฉัน</Text>
             </TouchableOpacity>
 
-            <TouchableOpacity style = {styles.btn_edit_profile}>
+            <TouchableOpacity style = {styles.btn_edit_profile} onPress={BuyCoin}>
               <Text style = {styles.btn_text_edit_profile}>เติมคอยด์</Text>
             </TouchableOpacity>
           

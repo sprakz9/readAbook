@@ -64,13 +64,13 @@ export const styles = StyleSheet.create({
       color : "gray"
     },
     headerText : {
-      textAlign : "center",
-      fontSize : 26,
-      color : "black",
-      marginTop : 3
+      fontSize: 18,
+      fontWeight: 'bold',
+      margin: 10,
+      color : "black"
     },
     topHeader_Text : {
-      fontSize : 25,
+      fontSize : 20,
       fontWeight : "bold",
       textAlign : "center",
       color : "white",

@@ -77,7 +77,7 @@ const Mybook = () => {
       <View style={styles.topHeader_View}>
         <Text style={styles.topHeader_Text}>readAbook</Text>
       </View>
-      <View>
+      <View style = {styles.ViewheaderText}>
         <Text style={styles.headerText}>หนังสือที่ซื้อแล้ว</Text>
       </View>
       <View style={styles.container}>
@@ -114,6 +114,11 @@ const Mybook = () => {
 }
 
 const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    padding: 10,
+    backgroundColor : "gray"
+  },
   topHeader_View: {
     backgroundColor: '#00bf6c',
     padding: 10,
@@ -128,10 +133,10 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: 'bold',
     margin: 10,
+    color : "black"
   },
-  container: {
-    flex: 1,
-    padding: 10,
+  ViewheaderText : {
+    backgroundColor :"white"
   },
   productContainer: {
     flex: 1,
@@ -168,6 +173,7 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     marginVertical: 15,
     marginLeft: 10,
+    color : "white"
   },
 });
 

@@ -12,6 +12,7 @@ import MybookPage from './screen/Mybook';
 import FavBookPage from './screen/FavBook';
 import RegisterPage from './screen/Register';
 import ProfilePage from './screen/Profile';
+import BuyCoinPage from './screen/BuyCoinPage';
 
 
 
@@ -65,6 +66,11 @@ const App = () => {
           name="Home" 
           component={HomeTabs} 
           options={{ headerShown: false }} 
+        />
+        <Stack.Screen
+        name='BuyCoinPage'
+        component={BuyCoinPage}
+        options={{title : "เติมคอยน์"}}
         />
       </Stack.Navigator>
     </NavigationContainer>
