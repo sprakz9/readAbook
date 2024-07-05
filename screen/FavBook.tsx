@@ -110,7 +110,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 16,
-    backgroundColor: 'gray',
+    backgroundColor: '#CDCDCD',
   },
   bookContainer: {
     marginBottom: 16,

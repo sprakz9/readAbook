@@ -17,46 +17,53 @@ import auth from '@react-native-firebase/auth';
 const Mybook = () => {
   const [purchasedBooks, setPurchasedBooks] = useState<any>({});
   const [loading, setLoading] = useState(true);
+  const [refreshing, setRefreshing] = useState(false);
+
+  const fetchPurchasedBooks = async () => {
+    try {
+      const currentUser = auth().currentUser;
+      if (currentUser) {
+        const userDoc = await firestore().collection('users').doc(currentUser.uid).get();
+        if (userDoc.exists) {
+          const userData: any = userDoc.data();
+          const purchasedBookIds = userData.PurchasedBook || [];
+
+          const bookPromises = purchasedBookIds.map(async (bookId: string) => {
+            const bookDoc = await firestore().collection('product_book').doc(bookId).get();
+            return { ...bookDoc.data(), book_id: bookDoc.id };
+          });
+
+          const booksData = await Promise.all(bookPromises);
+
+          // Group books by mainName
+          const groupedBooks = booksData.reduce((acc, book) => {
+            const { mainName } = book;
+            if (!acc[mainName]) {
+              acc[mainName] = [];
+            }
+            acc[mainName].push(book);
+            return acc;
+          }, {});
+
+          setPurchasedBooks(groupedBooks);
+        }
+      }
+    } catch (error) {
+      console.error('Error fetching purchased books: ', error);
+    } finally {
+      setLoading(false);
+      setRefreshing(false);
+    }
+  };
 
   useEffect(() => {
-    const fetchPurchasedBooks = async () => {
-      try {
-        const currentUser = auth().currentUser;
-        if (currentUser) {
-          const userDoc = await firestore().collection('users').doc(currentUser.uid).get();
-          if (userDoc.exists) {
-            const userData: any = userDoc.data();
-            const purchasedBookIds = userData.PurchasedBook || [];
-
-            const bookPromises = purchasedBookIds.map(async (bookId: string) => {
-              const bookDoc = await firestore().collection('product_book').doc(bookId).get();
-              return { ...bookDoc.data(), book_id: bookDoc.id };
-            });
-
-            const booksData = await Promise.all(bookPromises);
-
-            // Group books by mainName
-            const groupedBooks = booksData.reduce((acc, book) => {
-              const { mainName } = book;
-              if (!acc[mainName]) {
-                acc[mainName] = [];
-              }
-              acc[mainName].push(book);
-              return acc;
-            }, {});
-
-            setPurchasedBooks(groupedBooks);
-          }
-        }
-      } catch (error) {
-        console.error('Error fetching purchased books: ', error);
-      } finally {
-        setLoading(false);
-      }
-    };
-
     fetchPurchasedBooks();
   }, []);
+
+  const onRefresh = () => {
+    setRefreshing(true);
+    fetchPurchasedBooks();
+  };
 
   const handleTodetail = (item: any) => {
     // handle the detail view logic
@@ -81,7 +88,14 @@ const Mybook = () => {
         <Text style={styles.headerText}>หนังสือที่ซื้อแล้ว</Text>
       </View>
       <View style={styles.container}>
-        <ScrollView>
+        <ScrollView
+          refreshControl={
+            <RefreshControl
+              refreshing={refreshing}
+              onRefresh={onRefresh}
+            />
+          }
+        >
           {Object.keys(purchasedBooks).map((series: any) => (
             <View key={series}>
               <Text style={styles.seriesHeader}>{series}</Text>
@@ -117,7 +131,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 10,
-    backgroundColor : "gray"
+    backgroundColor : "#CDCDCD"
   },
   topHeader_View: {
     backgroundColor: '#00bf6c',
@@ -173,7 +187,7 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     marginVertical: 15,
     marginLeft: 10,
-    color : "white"
+    color : "black"
   },
 });
 

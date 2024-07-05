@@ -13,7 +13,8 @@ import FavBookPage from './screen/FavBook';
 import RegisterPage from './screen/Register';
 import ProfilePage from './screen/Profile';
 import BuyCoinPage from './screen/BuyCoinPage';
-
+import EditProfilePage from './screen/EditProfile';
+import EditPassWordPage from './screen/EditPassWord';
 
 
 const Tab = createMaterialBottomTabNavigator()
@@ -71,6 +72,20 @@ const App = () => {
         name='BuyCoinPage'
         component={BuyCoinPage}
         options={{title : "เติมคอยน์"}}
+        />
+        <Stack.Screen
+        name='EditProfile'
+        component={EditProfilePage}
+        options={{title : "แก้ไขข้อมูลส่วนตัว"}}
+        />
+        <Stack.Screen
+        name='EditPassWord'
+        component={EditPassWordPage}
+        options={{title : "แก้ไขรหัสผ่าน"}}
+        />
+        <Stack.Screen
+        name='Profile'
+        component={ProfilePage}
         />
       </Stack.Navigator>
     </NavigationContainer>

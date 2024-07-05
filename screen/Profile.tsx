@@ -18,7 +18,7 @@ import { useNavigation } from '@react-navigation/native';
 import auth from '@react-native-firebase/auth';
 import { BlurView } from "@react-native-community/blur";
 import Icon from 'react-native-vector-icons/Ionicons';
-import BuyCoinPage from './BuyCoinPage';
+
 
 
 
@@ -74,12 +74,12 @@ const Profile = () => {
     );
   }
 
-  const EditProfile = () => {
-    Alert.alert("แก้ไขโปรไฟล์")
+  const EditProfilePage = () => {
+    navigation.navigate("EditProfile")
   }
 
   const EditPassword = () => {
-    Alert.alert("แก้ไขพาสเวิร์ด")
+    navigation.navigate("EditPassWord")
   }
 
   const Myorder = () => {
@@ -146,7 +146,7 @@ const Profile = () => {
           {/* <View style={styles.line}></View> */}
 
           
-            <TouchableOpacity style = {styles.btn_edit_profile} onPress={EditProfile}>
+            <TouchableOpacity style = {styles.btn_edit_profile} onPress={EditProfilePage}>
               <Text style = {styles.btn_text_edit_profile}>แก้ไขข้อมูลส่วนตัว</Text>
             </TouchableOpacity>
 

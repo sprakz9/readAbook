@@ -139,8 +139,17 @@ const Home = () => {
         const userDocRef = firestore().collection('users').doc(userId);
         const userDoc = await userDocRef.get();
 
+        
         if (userDoc.exists) {
           const userData : any = userDoc.data();
+          const purchasedBooks = userData.PurchasedBook || [];
+
+          if (purchasedBooks.includes(PurchasedBook)) {
+            Alert.alert("คุณมีหนังสือเล่มนี้อยู่แล้ว");
+            return;
+          }
+          
+          //ขั้นตอนเช็ค coin
           if (userData.readAbook_coin >= bookPrice) {
             await userDocRef.update({
               readAbook_coin: userData.readAbook_coin - bookPrice,
