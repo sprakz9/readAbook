@@ -90,6 +90,32 @@ const Profile = () => {
     navigation.navigate("BuyCoinPage")
   }
 
+  const LogOut = () => {
+    Alert.alert(
+      'ยืนยันการออกจากระบบ',
+      'ต้องการออกจากระบบใช่ไหม ?',
+      [
+        {
+          text: 'Cancel',
+          style: 'cancel',
+        },
+        {
+          text: 'OK',
+          onPress : async () => {
+            try {
+              await auth().signOut();
+                navigation.navigate('Login');
+            } catch (error) {
+              console.error('Error signing out: ', error);
+              Alert.alert('Error', 'An error occurred while signing out.');
+            }
+          },
+        },
+      ],
+      { cancelable: false }
+    );
+  };
+
   return (
     
     <ScrollView refreshControl={
@@ -154,7 +180,7 @@ const Profile = () => {
               <Text style = {styles.btn_text_edit_profile}>เปลี่ยนพาสเวิร์ด</Text>
             </TouchableOpacity>
 
-            <TouchableOpacity style = {styles.btn_edit_profile}>
+            <TouchableOpacity style = {styles.btn_edit_profile} onPress={LogOut}>
               <Text style = {styles.btn_text_edit_profile}>ออกจากระบบ</Text>
             </TouchableOpacity>
 

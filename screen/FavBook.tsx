@@ -88,9 +88,9 @@ const FavBook = () => {
                 <View style = {styles.titleContainer}>
                   <Text style = {styles.title} numberOfLines={2} ellipsizeMode='tail'>{item.title}</Text>
                   <Text style = {styles.autors}>{item.authors}</Text>
-                  <TouchableOpacity style = {styles.btnPrice}>
+                  {/* <TouchableOpacity style = {styles.btnPrice}>
                     <Text style = {styles.price}>ราคา : {item.price} ซื้อเลย!</Text>
-                  </TouchableOpacity>
+                  </TouchableOpacity> */}
                 </View>
                 
             </View>   
